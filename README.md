@@ -1,7 +1,4 @@
 # ProjekatCizkejk
-# cizkejk
-# projekat-word
-
 Projekat Čizkejk
 
 
