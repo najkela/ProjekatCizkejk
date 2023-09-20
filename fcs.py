@@ -46,11 +46,6 @@ def save_file_as(current_file_path : list, paper : tk.Text) -> None:
             file.write(paragraph)
             file.write('\n')
 
-def formatText(paper : tk.Text) -> list[str]:
-    text = paper.get("1.0", "end-1c")
-    paragraphs = text.split("\n")
-    return paragraphs
-
 def showText(paper : tk.Text, paragraphs : list) -> None:
     paper.delete("1.0", "end")
     for paragraph in paragraphs:
