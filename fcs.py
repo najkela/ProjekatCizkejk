@@ -65,9 +65,12 @@ def create_new_file(current_file_path : list, paper : tk.Text) -> None:
 def selected_text(paper : tk.Text) -> str:
     return paper.tag_ranges(tk.SEL)
 
-def make_text_bold(paper : tk.Text, fonts : list[tuple], indexOfFont : int):
-    font = fonts[indexOfFont]
+def make_text_bold(paper : tk.Text, fonts : list[tuple], indexFont : int, ids : list[int]):
+    ids.append(ids[0] + 1)
+    ids.pop(0)
+    font = fonts[indexFont]
     input = font[2].split()
+    id = ids[0]
     changed = False
     for word in input:
         if word == 'bold':
@@ -77,11 +80,59 @@ def make_text_bold(paper : tk.Text, fonts : list[tuple], indexOfFont : int):
     if not changed:
         bold = True
 
-    output = "".join(input)
-    
+    output = " ".join(input)
+
     font = (font[0], font[1], output + " bold") if bold else (font[0], font[1], output)
-    fonts[indexOfFont] = font
+    fonts[indexFont] = font
 
     if paper.tag_ranges(tk.SEL):
-        paper.tag_add("bold", paper.index(tk.SEL_FIRST), paper.index(tk.SEL_LAST))
-        paper.tag_configure("bold", font = font)
+        paper.tag_add("bold" + str(id), paper.index(tk.SEL_FIRST), paper.index(tk.SEL_LAST))
+        paper.tag_configure("bold" + str(id), font = font)
+
+def make_text_italic(paper : tk.Text, fonts : list[tuple], indexFont : int, ids : list[int]):
+    ids.append(ids[0] + 1)
+    ids.pop(0)
+    font = fonts[indexFont]
+    input = font[2].split()
+    id = ids[0]
+    changed = False
+    for word in input:
+        if word == 'italic':
+            italic = False
+            changed = True
+            input.remove(word)
+    if not changed:
+        italic = True
+
+    output = " ".join(input)
+
+    font = (font[0], font[1], output + " italic") if italic else (font[0], font[1], output)
+    fonts[indexFont] = font
+
+    if paper.tag_ranges(tk.SEL):
+        paper.tag_add("italic" + str(id), paper.index(tk.SEL_FIRST), paper.index(tk.SEL_LAST))
+        paper.tag_configure("italic" + str(id), font = font)
+
+def make_text_underline(paper : tk.Text, fonts : list[tuple], indexFont : int, ids : list[int]):
+    ids.append(ids[0] + 1)
+    ids.pop(0)
+    font = fonts[indexFont]
+    input = font[2].split()
+    id = ids[0]
+    changed = False
+    for word in input:
+        if word == 'underline':
+            underline = False
+            changed = True
+            input.remove(word)
+    if not changed:
+        underline = True
+
+    output = " ".join(input)
+
+    font = (font[0], font[1], output + " underline") if underline else (font[0], font[1], output)
+    fonts[indexFont] = font
+
+    if paper.tag_ranges(tk.SEL):
+        paper.tag_add("underline" + str(id), paper.index(tk.SEL_FIRST), paper.index(tk.SEL_LAST))
+        paper.tag_configure("underline" + str(id), font = font)
